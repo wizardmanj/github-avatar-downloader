@@ -1,3 +1,6 @@
+var repoOwner = process.argv[2]; 
+var repoName = process.argv[3];
+
 var token = require('./secrets');
 var request = require('request');
 var fs = require('fs');
@@ -22,7 +25,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
     });
   }
 
- getRepoContributors("jquery", "jquery", downloadImageByURL);
+ getRepoContributors(repoOwner, repoName, downloadImageByURL);
 
   function downloadImageByURL(url, filePath) {
     request.get(url)
