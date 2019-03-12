@@ -1,9 +1,12 @@
-var repoOwner = process.argv[2]; 
-var repoName = process.argv[3];
-
+//supporting module reqs 
 var token = require('./secrets');
 var request = require('request');
 var fs = require('fs');
+var downloadImageByURL = require('./imgDownloader')
+
+//command line inputs
+var repoOwner = process.argv[2]; 
+var repoName = process.argv[3];
 
 console.log('Welcome to the GitHub Avatar Downloader!');
 
@@ -26,20 +29,3 @@ function getRepoContributors(repoOwner, repoName, cb) {
   }
 
  getRepoContributors(repoOwner, repoName, downloadImageByURL);
-
-  function downloadImageByURL(url, filePath) {
-    request.get(url)
-       .on('error', function (err) {                                   
-         throw err; 
-       })
-       .on('response', function (response) {                          
-        console.log('Downloading image...');
-        console.log('Response Status Code: ', response.statusCode);
-        console.log('Response Status Message: ', response.statusMessage);
-        console.log('Response Headers: ', response.headers['content-type']);
-       })
-       .on('end', function() {
-        console.log('Download complete.')})
-       .pipe(fs.createWriteStream(filePath));               
-  }
-
